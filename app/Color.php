@@ -6,5 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Color extends Model
 {
-    //
+    protected $fillable = [
+        'nombre'
+    ];
+
+    public function autos()
+    {
+       return $this->hasMany(Auto::class);
+    }
+    
 }
