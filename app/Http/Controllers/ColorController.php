@@ -62,7 +62,7 @@ class ColorController extends Controller
                 return response()->json([
                     'success' => true,
                     'message' => "Se registro el color correctamente",
-                ], 201);
+                ], 200);
             } catch (\PDOException $e) {
                 DB::rollBack();
                 Log::error('Error al almacenar el color' . $e->getMessage());

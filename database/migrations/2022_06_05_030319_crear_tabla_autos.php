@@ -24,6 +24,9 @@ class CrearTablaAutos extends Migration
 
             $table->unsignedBigInteger('color_id');
             $table->foreign('color_id')->references('id')->on('colors');
+
+            $table->unsignedBigInteger('modelo_id');
+            $table->foreign('modelo_id')->references('id')->on('modelos');
         });
     }
 

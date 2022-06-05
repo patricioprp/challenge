@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/autos','AutoController@all');
-
+Route::post('/autos','AutoController@store');
 
 Route::get('/colors','ColorController@all');
 Route::post('/colors','ColorController@store');

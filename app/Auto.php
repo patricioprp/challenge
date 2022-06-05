@@ -29,6 +29,11 @@ class Auto extends Model
         return $this->belongsTo(Marca::class);
     }
 
+    public function modelo()
+    {
+        return $this->belongsTo(Modelo::class);
+    }
+
     public function color()
     {
         return $this->belongsTo(Color::class);

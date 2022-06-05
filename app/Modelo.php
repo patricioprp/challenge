@@ -16,4 +16,9 @@ class Modelo extends Model
     {
         return $this->belongsTo(Marca::class);
     }
+
+    public function autos()
+    {
+       return $this->hasMany(Auto::class);
+    }
 }

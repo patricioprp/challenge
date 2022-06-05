@@ -24,6 +24,14 @@ class MarcaController extends Controller
         ],200);
     }
 
+    public function all(){
+        return response()->json([
+            "success" => true,
+            "message" => "Marcas y modelos obtenidos correctamente",
+            'data' => Marca::with('modelos')->orderBy('nombre','asc')->get()
+        ],200);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
