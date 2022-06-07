@@ -38,3 +38,4 @@ Route::get('/propietarios','PropietarioController@all');
 Route::post('/propietarios','PropietarioController@store');
 
 Route::get('/servicios','ServicioController@all');
+Route::post('/servicio','ServicioController@store');

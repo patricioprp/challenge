@@ -32,7 +32,11 @@ class ServicioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response()->json([
+            'success' => true,
+            'message' => 'Servicios obtenidos correctamente',
+            'data' => $request->all()
+        ],200);
     }
 
     /**
