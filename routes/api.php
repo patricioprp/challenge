@@ -20,6 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/autos','AutoController@all');
 Route::post('/autos','AutoController@store');
+Route::get('/autos/destroy/{auto_id}', 'AutoController@destroy');
+Route::put('/autos/editar/{id}', 'AutoController@update');
+Route::get('/auto/show/{auto}', 'AutoController@show');
 
 Route::get('/colors','ColorController@all');
 Route::post('/colors','ColorController@store');

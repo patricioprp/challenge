@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Auto;
+use App\Propietario;
 class AutoController extends Controller
 {
     /**
@@ -19,7 +20,7 @@ class AutoController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Autos obtenidos correctamente',
-            'data' => Auto::orderBy('anio','asc')->with('marca','marca.modelos')->get()
+            'data' => Propietario::orderBy('id','asc')->with('autos')->get()
         ],200);
     }
 
@@ -36,7 +37,8 @@ class AutoController extends Controller
             'patente'  => 'required|string' ,
             'marca_id' => 'required|integer' ,
             'color_id' => 'required|integer' ,
-            'modelo_id'=> 'required|integer'  
+            'modelo_id'=> 'required|integer' ,
+            'propietario_id'=> 'required|integer'  
             ];
         $validator = \Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -56,6 +58,7 @@ class AutoController extends Controller
             $nuevo_auto->modelo_id = $request->modelo_id;
             $nuevo_auto->color_id = $request->color_id;
             $nuevo_auto->save();
+            $nuevo_auto->propietarios()->attach($request->propietario_id);
             DB::commit();
             Log::info('Se guardo el auto ');
             return response()->json([
@@ -64,6 +67,10 @@ class AutoController extends Controller
             ], 200);
         } catch (\PDOException $e) {
             DB::rollBack();
+            return response()->json([
+                'success' => true,
+                'message' => $e->getMessage(),
+            ], 500);
             Log::error('Error al almacenar el auto' . $e->getMessage());
         }
     }
@@ -76,7 +83,21 @@ class AutoController extends Controller
      */
     public function show($id)
     {
-        //
+        try{
+            $auto = Auto::findOrFail($id)->with('modelo.marca','modelo','color')->get();
+            return response()->json([
+                'success' => true,
+                'message' => 'Auto encontrado Correctamente',
+                'data' => $auto
+            ], 200);
+            Log::emergency('Se edito el auto: ' . $id);
+        }catch(ModelNotFoundException $exception){
+            return response()->json([
+                'success' => true,
+                'message' => 'No se encontro el auto '.$exception->getMessage()
+            ]);
+            Log::error('No se encontro el auto ,'.$exception->getMessage());
+        }
     }
 
     /**
@@ -88,7 +109,26 @@ class AutoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $auto = Auto::findOrFail($id);
+            $auto->anio = $request->anio;
+            $auto->patente = $request->patente;
+            $auto->marca_id = $request->marca_id;
+            $auto->modelo_id = $request->modelo_id;
+            $auto->color_id = $request->color_id;
+            $auto->save();
+            return response()->json([
+                'success' => true,
+                'message' => 'Auto editado Correctamente',
+            ], 200);
+            Log::emergency('Se edito el auto: ' . $id);
+        }catch(ModelNotFoundException $exception){
+            return response()->json([
+                'success' => true,
+                'message' => 'No se encontro el auto '.$exception->getMessage()
+            ]);
+            Log::error('No se encontro el auto ,'.$exception->getMessage());
+        }
     }
 
     /**
@@ -99,6 +139,21 @@ class AutoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $auto = Auto::findOrFail($id);
+            $auto->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Auto borrado Correctamente',
+            ], 200);
+            Log::emergency('Se elimino el auto: ' . $id);
+        }catch(ModelNotFoundException $exception){
+            return response()->json([
+                'success' => true,
+                'message' => 'No se encontro el auto '.$exception->getMessage()
+            ]);
+            Log::error('No se encontro el auto ,'.$exception->getMessage());
+        }
+
     }
 }
