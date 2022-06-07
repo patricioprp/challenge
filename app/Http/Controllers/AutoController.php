@@ -64,7 +64,7 @@ class AutoController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => "Se registro el auto correctamente",
-            ], 200);
+            ], 201);
         } catch (\PDOException $e) {
             DB::rollBack();
             return response()->json([
