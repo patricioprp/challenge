@@ -35,7 +35,7 @@ class ServicioController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Servicios obtenidos correctamente',
-            'data' => $request->servicios[0]
+            'data' => $request->venta[0]
         ],200);
     }
 

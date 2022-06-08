@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CrearTablaSerivicioAuto extends Migration
+class CrearTablaVentas extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CrearTablaSerivicioAuto extends Migration
      */
     public function up()
     {
-        Schema::create('servicio_auto', function (Blueprint $table) {
+        Schema::create('ventas', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre_empleado');
             $table->timestamps();
-
-            $table->unsignedBigInteger('auto_id');
             $table->unsignedBigInteger('servicio_id');
-            $table->foreign('auto_id')->references('id')->on('autos')->onDelete('cascade');
-            $table->foreign('servicio_id')->references('id')->on('servicios')->onDelete('cascade');
+            $table->foreign('servicio_id')->references('id')->on('servicios');
         });
     }
 
@@ -31,6 +29,6 @@ class CrearTablaSerivicioAuto extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('servicio_auto');
+        Schema::dropIfExists('ventas');
     }
 }

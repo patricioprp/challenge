@@ -14,9 +14,9 @@ class Auto extends Model
         'color_id'
     ];
 
-    public function servicios()
+    public function ventas()
     {
-       return $this->belongsToMany(Servicio::class);
+       return $this->belongsToMany(Venta::class);
     }
 
     public function propietarios()

@@ -10,8 +10,10 @@ class Servicio extends Model
         'nombre',
         'costo'
     ];
-    public function autos()
+
+    public function ventas()
     {
-       return $this->belongsToMany(Auto::class);
+       return $this->hasMany(Venta::class);
     }
+
 }

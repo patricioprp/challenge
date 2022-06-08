@@ -48,7 +48,7 @@ class AutoController extends Controller
                 'errors'  => $validator->errors()->all()
             ],500);
         }
-//antes de guardar validar si existen los id marca,modelo y color
+
         try {
             DB::beginTransaction();
             $nuevo_auto = new Auto();
