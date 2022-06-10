@@ -16,8 +16,7 @@ class Venta extends Model
        return $this->belongsToMany(Auto::class);
     }
 
-    public function servicio()
-    {
-        return $this->belongsTo(Servicio::class);
-    }
+    public function autoVentas(){
+        return $this->hasMany(AutoVenta::class);
+      }
 }

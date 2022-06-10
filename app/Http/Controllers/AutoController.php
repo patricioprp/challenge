@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Auto;
 use App\Propietario;
+use App\AutoVenta;
 class AutoController extends Controller
 {
     /**
@@ -155,5 +156,25 @@ class AutoController extends Controller
             Log::error('No se encontro el auto ,'.$exception->getMessage());
         }
 
+    }
+
+    public function historial($id){
+        try{
+
+            // $auto = Auto::findOrFail($id)->with('autoVenta')->get();
+            $auto = AutoVenta::where('auto_id','=',$id)->get();
+            return response()->json([
+                'success' => true,
+                'message' => 'Historial Auto encontrado Correctamente',
+                'data' => $auto
+            ], 200);
+            Log::emergency('Se encontro el historial del auto: ' . $id);
+        }catch(ModelNotFoundException $exception){
+            return response()->json([
+                'success' => true,
+                'message' => 'No se encontro el auto '.$exception->getMessage()
+            ]);
+            Log::error('No se encontro el auto ,'.$exception->getMessage());
+        }
     }
 }

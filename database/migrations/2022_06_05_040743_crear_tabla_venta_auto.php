@@ -15,6 +15,8 @@ class CrearTablaVentaAuto extends Migration
     {
         Schema::create('venta_auto', function (Blueprint $table) {
             $table->id();
+            $table->enum("servicio",['Cambio de Aceite','Cambio de Filtro','Cambio de Correa','Revisión General','Pintura','Otro']);
+            $table->integer('costo_servicio');
             $table->timestamps();
 
             $table->unsignedBigInteger('auto_id');

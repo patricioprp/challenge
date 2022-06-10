@@ -15,10 +15,13 @@ class CrearTablaVentas extends Migration
     {
         Schema::create('ventas', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre_empleado');
+            $table->double('monto',8,2);
+            $table->date('fecha');
+            $table->unsignedBigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('propietario_id')->unsigned();
+            $table->foreign('propietario_id')->references('id')->on('propietarios')->onDelete('cascade');
             $table->timestamps();
-            $table->unsignedBigInteger('servicio_id');
-            $table->foreign('servicio_id')->references('id')->on('servicios');
         });
     }
 
